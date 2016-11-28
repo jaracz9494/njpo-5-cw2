@@ -31,9 +31,9 @@ public class Cw2 {
         }
         
         public void wysw() {
-            System.out.printf("%-10s",Nazwisko);
-            System.out.printf("%-10s",Imie);
-            System.out.printf("%-10s",Telefon);
+            System.out.printf("%-20s",Nazwisko);
+            System.out.printf("%-20s",Imie);
+            System.out.printf("%-20s",Telefon);
             System.out.println();
             
         }
@@ -47,6 +47,7 @@ public class Cw2 {
         Person p = new Person();
         String im, nazw;
         int tel;
+        boolean war = false;
         
         System.out.println("podaj dane do książki");
         System.out.println("Imie:");
@@ -66,8 +67,24 @@ public class Cw2 {
             for (int i=0; i<ksiazka.size(); i++) {
                 if (ksiazka.get(i).Nazwisko.compareTo(p.Nazwisko)>0){
                     ksiazka.add(i,p);
+                    war=true;
                     break;
                 }
+                if (ksiazka.get(i).Nazwisko.compareTo(p.Nazwisko)==0) {
+                    war=true;
+                    if (ksiazka.get(i).Imie.compareTo(p.Imie)>0){
+                        ksiazka.add(i,p);
+                        war=true;
+                        break;
+                    }
+                }
+                if (war==true && ksiazka.get(i).Nazwisko.compareTo(p.Nazwisko)<0) {
+                    ksiazka.add(i,p);
+                    break;
+                }
+            }
+            if (war==false) {
+                ksiazka.add(p);
             }
         }
         
@@ -76,13 +93,16 @@ public class Cw2 {
     
     public void wysw_ksiazka() {
         
-        System.out.println("Imie:     Nazwisko:     Telefon:");
+        System.out.println("------------------------------------------------");
+        System.out.println("Nazwisko:           Imie:               Telefon:");
         
         for (int i=0; i<ksiazka.size(); i++) {
             
             ksiazka.get(i).wysw();
         
         }
+        
+        System.out.println("------------------------------------------------");
     }
 
     /**
@@ -96,7 +116,7 @@ public class Cw2 {
         boolean wyb=false;
         
         while (wyb==false) {  
-            System.out.println("wybierz opcje:");
+            System.out.println("Wybierz opcje:");
             System.out.println("1 - Dodaj do ksiazki adresowej");
             System.out.println("2 - Wyswietl ksiazke adresową");
             System.out.println("3 - Wyjście");
