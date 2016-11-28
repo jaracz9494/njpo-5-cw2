@@ -15,6 +15,8 @@ import java.util.Scanner;
  */
 public class Cw2 {
     
+    List<Person> ksiazka = new ArrayList<Person>();
+    
     public class Person {
         
         String Imie, Nazwisko;
@@ -29,16 +31,18 @@ public class Cw2 {
         }
         
         public void wysw() {
-            System.out.println(Imie);
-            System.out.println(Nazwisko);
-            System.out.println(Telefon);
+            System.out.printf("%-10s",Nazwisko);
+            System.out.printf("%-10s",Imie);
+            System.out.printf("%-10s",Telefon);
+            System.out.println();
+            
         }
             
         
     }
     
-    public void ksiazka() {
-        List<Person> ksiazka = new ArrayList<Person>();
+    public void dod_do_ksiazka() {
+        
         Scanner sc = new Scanner (System.in);
         Person p = new Person();
         String im, nazw;
@@ -55,15 +59,30 @@ public class Cw2 {
         tel = Integer.parseInt(sc.nextLine());
         
         p.ustaw(im, nazw, tel);
-        ksiazka.add(p);
-        System.out.println(ksiazka);
+        
+        if (ksiazka.size()==0) {
+            ksiazka.add(p);
+        } else {
+            for (int i=0; i<ksiazka.size(); i++) {
+                if (ksiazka.get(i).Nazwisko.compareTo(p.Nazwisko)>0){
+                    ksiazka.add(i,p);
+                    break;
+                }
+            }
+        }
+        
+        
+    }
+    
+    public void wysw_ksiazka() {
+        
+        System.out.println("Imie:     Nazwisko:     Telefon:");
         
         for (int i=0; i<ksiazka.size(); i++) {
             
             ksiazka.get(i).wysw();
         
         }
-        
     }
 
     /**
@@ -71,7 +90,29 @@ public class Cw2 {
      */
     public static void main(String[] args) {
         Cw2 ks = new Cw2();
-        ks.ksiazka();
+        
+        Scanner s = new Scanner (System.in);
+        String wybor;
+        boolean wyb=false;
+        
+        while (wyb==false) {  
+            System.out.println("wybierz opcje:");
+            System.out.println("1 - Dodaj do ksiazki adresowej");
+            System.out.println("2 - Wyswietl ksiazke adresową");
+            System.out.println("3 - Wyjście");
+            wybor = s.nextLine();
+            switch (wybor) {
+                case "1": ks.dod_do_ksiazka();
+                    break;
+                case "2": ks.wysw_ksiazka();
+                    break;
+                case "3": wyb = true;
+                    break;
+                default:  System.out.println("Błędny wybór");
+                    break;
+            }
+        }
+ 
         
         
     }
